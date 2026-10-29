@@ -1,33 +1,59 @@
 import Image from "next/image";
 import Link from "next/link";
 import { athletics } from "@/lib/content";
+import { ArchCard } from "@/components/NewsGrid";
+import { ParallaxImage } from "@/components/Parallax";
+import { Reveal } from "@/components/Reveal";
 
 export function AthleticsSection() {
   return (
-    <section className="bg-orion-navy-deep text-white">
-      <div className="section-pad pb-0">
-        <div className="container-orion text-center">
-          <h2 className="font-serif text-4xl tracking-tight sm:text-5xl">
-            {athletics.title}
-          </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-white/85">
-            {athletics.body}
-          </p>
-          <div className="mt-8">
-            <Link href={athletics.cta.href} className="btn-orion-light">
+    <section className="bg-white">
+      <ParallaxImage
+        src={athletics.heroImage}
+        alt="Orion student-athlete competing"
+        className="h-[70svh] min-h-[480px]"
+      >
+        <div className="container-orion flex h-full flex-col justify-end px-4 pb-14 text-white sm:px-6">
+          <Reveal>
+            <h2 className="font-serif text-4xl tracking-tight sm:text-5xl lg:text-6xl">
+              {athletics.title}
+            </h2>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-white/90">{athletics.body}</p>
+            <Link href={athletics.cta.href} className="btn-orion-light mt-8">
               {athletics.cta.label}
             </Link>
+          </Reveal>
+        </div>
+      </ParallaxImage>
+
+      <div className="section-pad">
+        <div className="container-orion">
+          <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
+            <Reveal>
+              <h3 className="font-serif text-3xl tracking-tight text-orion-ink sm:text-4xl">
+                {athletics.subTitle}
+              </h3>
+              <p className="mt-5 text-lg leading-8 text-orion-muted">{athletics.subBody}</p>
+            </Reveal>
+            <div className="grid grid-cols-3 gap-3">
+              {athletics.gallery.map((img, i) => (
+                <Reveal key={img} delay={i * 80}>
+                  <div className="relative aspect-[3/4] overflow-hidden rounded-xl">
+                    <Image src={img} alt="" fill sizes="30vw" className="object-cover" />
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {athletics.stories.map((s, i) => (
+              <Reveal key={s.href} delay={i * 90}>
+                <ArchCard story={s} />
+              </Reveal>
+            ))}
           </div>
         </div>
-      </div>
-      <div className="relative mt-10 aspect-[16/9] w-full md:aspect-[21/9]">
-        <Image
-          src={athletics.image}
-          alt="Orion athletics"
-          fill
-          sizes="100vw"
-          className="object-cover"
-        />
       </div>
     </section>
   );

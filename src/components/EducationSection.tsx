@@ -1,5 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import { education } from "@/lib/content";
+import { Reveal } from "@/components/Reveal";
+import { ArchCard } from "@/components/NewsGrid";
 
 export function EducationSection() {
   return (
@@ -7,63 +10,86 @@ export function EducationSection() {
       <div className="section-pad">
         <div className="container-orion">
           <div className="max-w-3xl">
-            <h2 className="font-serif text-4xl tracking-tight sm:text-5xl">
-              {education.title}
-            </h2>
-            <p className="mt-5 text-lg leading-8 text-white/85">
-              {education.body}
-            </p>
+            <Reveal>
+              <h2 className="font-serif text-4xl tracking-tight sm:text-5xl lg:text-6xl">
+                {education.title}
+              </h2>
+            </Reveal>
+            <Reveal delay={100}>
+              <p className="mt-6 text-lg leading-8 text-white/85">{education.body}</p>
+            </Reveal>
           </div>
 
-          <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-sm md:aspect-[21/9]">
-            <Image
-              src={education.image}
-              alt="Students learning at Orion"
-              fill
-              sizes="100vw"
-              className="object-cover"
-            />
-          </div>
-
-          <div className="mt-12 grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-            <div>
-              <h3 className="font-serif text-3xl tracking-tight">
-                {education.subtitle}
-              </h3>
-              <p className="mt-4 text-lg leading-8 text-white/85">
-                {education.detail}
-              </p>
-              <p className="mt-6 border-l-4 border-orion-orange pl-4 text-base leading-7 text-white/90">
-                {education.aid}
-              </p>
+          <Reveal>
+            <div className="relative mt-12 aspect-[16/9] overflow-hidden rounded-2xl md:aspect-[21/9]">
+              <Image
+                src={education.civicImage}
+                alt="Students in discussion at Orion"
+                fill
+                sizes="100vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-6 sm:p-10">
+                <h3 className="font-serif text-3xl tracking-tight sm:text-4xl">
+                  {education.civicTitle}
+                </h3>
+                <p className="mt-3 max-w-2xl leading-7 text-white/90">{education.civicBody}</p>
+              </div>
             </div>
+          </Reveal>
 
-            <div className="grid gap-4">
-              {education.cards.map((card) => (
-                <article
-                  key={card.title}
-                  className="overflow-hidden rounded-sm bg-white text-orion-ink shadow-sm"
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {education.civicStories.map((s, i) => (
+              <Reveal key={s.href} delay={i * 90}>
+                <ArchCard story={s} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Financial aid */}
+      <div className="bg-orion-navy-deep">
+        <div className="container-orion grid gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[1fr_1fr] lg:py-28">
+          <div className="lg:sticky lg:top-40 lg:self-start">
+            <Reveal>
+              <p className="eyebrow">Admissions &amp; Aid</p>
+              <h3 className="mt-3 font-serif text-3xl tracking-tight sm:text-4xl lg:text-5xl">
+                {education.aidTitle}
+              </h3>
+              <p className="mt-5 text-lg leading-8 text-white/85">{education.aidBody}</p>
+              <p className="mt-6 border-l-4 border-orion-orange pl-5 font-serif text-xl leading-relaxed text-white">
+                {education.aidHighlight}
+              </p>
+              <Link href={education.aidCta.href} className="btn-orion-light mt-8">
+                {education.aidCta.label}
+              </Link>
+            </Reveal>
+          </div>
+
+          <div className="grid gap-6">
+            {education.aidCards.map((card, i) => (
+              <Reveal key={card.href} delay={i * 100}>
+                <Link
+                  href={card.href}
+                  className="group block overflow-hidden rounded-2xl bg-white text-orion-ink shadow-lg"
                 >
                   <div className="relative aspect-[16/9]">
                     <Image
                       src={card.image}
                       alt=""
                       fill
-                      sizes="(max-width: 1024px) 100vw, 40vw"
-                      className="object-cover"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-cover transition duration-700 group-hover:scale-[1.04]"
                     />
                   </div>
-                  <div className="p-5">
-                    <h4 className="font-serif text-xl leading-snug">
-                      {card.title}
-                    </h4>
-                    <p className="mt-2 text-sm leading-6 text-orion-muted">
-                      {card.body}
-                    </p>
+                  <div className="p-6">
+                    <h4 className="font-serif text-2xl leading-snug">{card.title}</h4>
+                    <p className="mt-3 leading-7 text-orion-muted">{card.body}</p>
                   </div>
-                </article>
-              ))}
-            </div>
+                </Link>
+              </Reveal>
+            ))}
           </div>
         </div>
       </div>

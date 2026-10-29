@@ -1,15 +1,64 @@
+"use client";
+
+import Image from "next/image";
 import Link from "next/link";
-import { navUtility, site } from "@/lib/content";
+import { useEffect, useRef, useState } from "react";
+import { audienceLinks, megaNav, site, utilityLinks } from "@/lib/content";
 
 export function Header() {
+  const [open, setOpen] = useState<string | null>(null);
+  const [mobile, setMobile] = useState(false);
+  const closeTimer = useRef<number | null>(null);
+
+  const active = megaNav.find((s) => s.id === open) ?? null;
+
+  const scheduleClose = () => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    closeTimer.current = window.setTimeout(() => setOpen(null), 160);
+  };
+  const cancelClose = () => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+  };
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(null);
+        setMobile(false);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = mobile ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobile]);
+
   return (
-    <header className="sticky top-0 z-50">
-      <div className="bg-orion-navy-deep text-white/90">
-        <div className="container-orion flex flex-wrap items-center justify-between gap-2 px-4 py-1.5 text-[12px] tracking-wide sm:px-6">
+    <header className="sticky top-0 z-50 text-white" onMouseLeave={scheduleClose}>
+      {/* Utility bar */}
+      <div className="bg-orion-navy-deep/95 text-white/85">
+        <div className="container-orion flex items-center justify-between gap-3 px-4 py-1.5 text-[12px] tracking-wide sm:px-6">
           <nav className="flex flex-wrap items-center gap-x-5 gap-y-1">
-            {navUtility.map((item) => (
+            {utilityLinks.map((item) => (
               <Link
-                key={item.href + item.label}
+                key={item.label}
+                href={item.href}
+                className="hover:text-white hover:underline underline-offset-2"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+          <nav className="hidden items-center gap-x-5 md:flex">
+            <span className="text-white/50">Information for</span>
+            {audienceLinks.map((item) => (
+              <Link
+                key={item.label}
                 href={item.href}
                 className="hover:text-white hover:underline underline-offset-2"
               >
@@ -20,74 +69,251 @@ export function Header() {
         </div>
       </div>
 
-      <div className="glass-bar text-white">
-        <div className="container-orion flex items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
-          <Link href="/" className="group flex items-center gap-3">
+      {/* Main bar */}
+      <div className="glass-bar">
+        <div className="container-orion flex items-center justify-between gap-6 px-4 py-3 sm:px-6">
+          <Link href="/" className="flex shrink-0 items-center gap-3">
             <span
               aria-hidden
-              className="grid h-10 w-10 place-items-center rounded-sm border border-white/30 bg-white/5 font-serif text-xl font-semibold tracking-tight"
+              className="grid h-10 w-10 place-items-center rounded-sm border border-white/30 bg-white/5 font-serif text-xl font-semibold"
             >
               O
             </span>
-            <span className="font-serif text-[1.35rem] leading-none tracking-tight sm:text-[1.65rem]">
+            <span className="font-serif text-[1.3rem] leading-none tracking-tight sm:text-[1.5rem] xl:text-[1.6rem]">
               {site.name}
             </span>
           </Link>
 
-          <form
-            action="/search"
-            method="get"
-            className="hidden items-center gap-2 md:flex"
-            role="search"
-          >
-            <label htmlFor="site-search" className="sr-only">
-              Search Orion
-            </label>
-            <input
-              id="site-search"
-              name="q"
-              type="search"
-              placeholder="Search"
-              className="w-48 rounded border border-white/20 bg-white/10 px-3 py-1.5 text-sm text-white placeholder:text-white/60 outline-none focus:border-white/50 lg:w-64"
-            />
-            <button
-              type="submit"
-              className="grid h-9 w-9 place-items-center rounded border border-white/20 bg-white/10 hover:bg-white/15"
-              aria-label="Submit search"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
+          <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+            {megaNav.map((section) => (
+              <button
+                key={section.id}
+                type="button"
+                onMouseEnter={() => {
+                  cancelClose();
+                  setOpen(section.id);
+                }}
+                onClick={() => {
+                  cancelClose();
+                  setOpen(section.id);
+                }}
+                aria-expanded={open === section.id}
+                aria-controls={`mega-${section.id}`}
+                className={`relative whitespace-nowrap rounded px-2.5 py-2 text-[0.88rem] font-medium transition xl:px-3 xl:text-[0.92rem] ${
+                  open === section.id
+                    ? "bg-white/10 text-white"
+                    : "text-white/85 hover:text-white"
+                }`}
               >
-                <circle cx="11" cy="11" r="7" />
-                <path d="m20 20-3.5-3.5" />
+                {section.label}
+                <span
+                  className={`absolute inset-x-3 -bottom-[13px] h-[3px] rounded-full bg-orion-orange transition ${
+                    open === section.id ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+              </button>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <form
+              action="/search"
+              method="get"
+              className="hidden items-center xl:flex"
+              role="search"
+            >
+              <label htmlFor="site-search" className="sr-only">
+                Search Orion
+              </label>
+              <input
+                id="site-search"
+                name="q"
+                type="search"
+                placeholder="Search"
+                className="w-36 rounded-l border border-white/20 bg-white/10 px-3 py-1.5 text-sm text-white placeholder:text-white/60 outline-none focus:border-white/50 xl:w-52"
+              />
+              <button
+                type="submit"
+                className="grid h-[34px] w-9 place-items-center rounded-r border border-l-0 border-white/20 bg-white/10 hover:bg-white/15"
+                aria-label="Submit search"
+              >
+                <SearchIcon />
+              </button>
+            </form>
+            <Link
+              href="/search"
+              className="grid h-9 w-9 place-items-center rounded border border-white/20 bg-white/10 xl:hidden"
+              aria-label="Search"
+            >
+              <SearchIcon />
+            </Link>
+            <button
+              type="button"
+              onClick={() => setMobile(true)}
+              className="grid h-9 w-9 place-items-center rounded border border-white/20 bg-white/10 lg:hidden"
+              aria-label="Open menu"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M4 7h16M4 12h16M4 17h16" />
               </svg>
             </button>
-          </form>
+          </div>
+        </div>
 
-          <Link
-            href="/search"
-            className="grid h-9 w-9 place-items-center rounded border border-white/20 bg-white/10 md:hidden"
-            aria-label="Search"
+        {/* Mega panel */}
+        <div
+          className={`absolute inset-x-0 top-full hidden lg:block ${
+            active ? "pointer-events-auto" : "pointer-events-none"
+          }`}
+          onMouseEnter={cancelClose}
+        >
+          <div
+            className={`glass-panel transition duration-200 ${
+              active ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0"
+            }`}
           >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <circle cx="11" cy="11" r="7" />
-              <path d="m20 20-3.5-3.5" />
-            </svg>
-          </Link>
+            {active ? (
+              <div
+                id={`mega-${active.id}`}
+                className="container-orion grid gap-10 px-6 py-10 lg:grid-cols-[1.1fr_1fr_1fr]"
+              >
+                <div>
+                  <p className="eyebrow">{active.label}</p>
+                  <h2 className="mt-3 font-serif text-3xl tracking-tight">
+                    {active.blurb}
+                  </h2>
+                  <Link
+                    href={active.href}
+                    className="btn-orion-outline mt-6"
+                    onClick={() => setOpen(null)}
+                  >
+                    Explore {active.label}
+                    <Arrow />
+                  </Link>
+                </div>
+                <ul className="grid content-start gap-2 border-l border-white/10 pl-8 text-[1.05rem]">
+                  {active.links.map((l) => (
+                    <li key={l.href + l.label}>
+                      <Link
+                        href={l.href}
+                        onClick={() => setOpen(null)}
+                        className="group inline-flex items-center gap-2 py-1.5 text-white/85 hover:text-white"
+                      >
+                        <span className="h-px w-0 bg-orion-orange transition-all group-hover:w-5" />
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                  <li className="mt-6 border-t border-white/10 pt-5">
+                    <p className="mb-2 text-xs uppercase tracking-[0.12em] text-white/50">
+                      Information for
+                    </p>
+                    <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+                      {audienceLinks.map((a) => (
+                        <Link
+                          key={a.label}
+                          href={a.href}
+                          onClick={() => setOpen(null)}
+                          className="text-white/80 hover:text-white hover:underline"
+                        >
+                          {a.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </li>
+                </ul>
+                <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+                  <Image
+                    src={active.image}
+                    alt=""
+                    fill
+                    sizes="400px"
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
+
+      {/* Mobile drawer */}
+      {mobile ? (
+        <div className="fixed inset-0 z-[60] bg-orion-navy-deep text-white lg:hidden">
+          <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+            <span className="font-serif text-xl">{site.name}</span>
+            <button
+              type="button"
+              onClick={() => setMobile(false)}
+              className="grid h-9 w-9 place-items-center rounded border border-white/20"
+              aria-label="Close menu"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            </button>
+          </div>
+          <div className="h-[calc(100svh-57px)] overflow-y-auto px-4 py-4">
+            <form action="/search" className="mb-4 flex">
+              <input
+                name="q"
+                type="search"
+                placeholder="Search Orion"
+                className="w-full rounded-l border border-white/20 bg-white/10 px-3 py-2 text-sm placeholder:text-white/60 outline-none"
+              />
+              <button className="grid w-11 place-items-center rounded-r border border-l-0 border-white/20 bg-white/10" aria-label="Search">
+                <SearchIcon />
+              </button>
+            </form>
+            {megaNav.map((s) => (
+              <details key={s.id} className="group border-b border-white/10">
+                <summary className="flex cursor-pointer list-none items-center justify-between py-3 text-lg font-medium">
+                  {s.label}
+                  <span className="text-white/50 transition group-open:rotate-45">+</span>
+                </summary>
+                <ul className="pb-3 pl-3 text-white/85">
+                  {s.links.map((l) => (
+                    <li key={l.href + l.label}>
+                      <Link href={l.href} onClick={() => setMobile(false)} className="block py-1.5">
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ))}
+            <p className="mt-6 text-xs uppercase tracking-[0.12em] text-white/50">
+              Information for
+            </p>
+            <ul className="mt-2 grid grid-cols-2 gap-2 text-white/85">
+              {audienceLinks.map((a) => (
+                <li key={a.label}>
+                  <Link href={a.href} onClick={() => setMobile(false)} className="block py-1">
+                    {a.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ) : null}
     </header>
+  );
+}
+
+function SearchIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <circle cx="11" cy="11" r="7" />
+      <path d="m20 20-3.5-3.5" />
+    </svg>
+  );
+}
+
+function Arrow() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
   );
 }
