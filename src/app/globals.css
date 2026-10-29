@@ -1,26 +1,159 @@
 @import "tailwindcss";
 
 :root {
+  --orion-navy: #0a1f3a;
+  --orion-navy-deep: #061528;
+  --orion-blue: #0d3b66;
+  --orion-orange: #e87722;
+  --orion-ink: #2e2d29;
+  --orion-muted: #5e5a54;
+  --orion-fog: #f2f2f2;
+  --orion-fog-2: #e8e6e3;
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #2e2d29;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-orion-navy: var(--orion-navy);
+  --color-orion-navy-deep: var(--orion-navy-deep);
+  --color-orion-blue: var(--orion-blue);
+  --color-orion-orange: var(--orion-orange);
+  --color-orion-ink: var(--orion-ink);
+  --color-orion-muted: var(--orion-muted);
+  --color-orion-fog: var(--orion-fog);
+  --color-orion-fog-2: var(--orion-fog-2);
+  --font-sans: var(--font-source-sans);
+  --font-serif: var(--font-source-serif);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-source-sans), system-ui, sans-serif;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+.font-serif {
+  font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.glass-bar {
+  background: linear-gradient(
+    180deg,
+    rgba(6, 21, 40, 0.92) 0%,
+    rgba(10, 31, 58, 0.88) 100%
+  );
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.arch-card {
+  border-radius: 999px 999px 12px 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.arch-media {
+  border-radius: 999px 999px 0 0;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  position: relative;
+}
+
+.btn-orion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--orion-navy);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.7rem 1.35rem;
+  border-radius: 4px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-orion:hover {
+  background: var(--orion-blue);
+}
+
+.btn-orion-light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: var(--orion-navy);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.7rem 1.35rem;
+  border-radius: 4px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-orion-light:hover {
+  background: var(--orion-fog);
+}
+
+.section-pad {
+  padding: 4.5rem 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .section-pad {
+    padding: 5.5rem 2rem;
+  }
+}
+
+.container-orion {
+  width: 100%;
+  max-width: 1180px;
+  margin-inline: auto;
+}
+
+.footer-arches {
+  background:
+    radial-gradient(
+      120% 80% at 15% 120%,
+      rgba(0, 0, 0, 0.18) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      100% 70% at 50% 130%,
+      rgba(0, 0, 0, 0.22) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      120% 80% at 85% 120%,
+      rgba(0, 0, 0, 0.18) 0%,
+      transparent 55%
+    ),
+    var(--orion-navy);
+}
+
+.hero-scrim {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(0, 0, 0, 0.35) 42%,
+    rgba(0, 0, 0, 0.15) 100%
+  );
 }
