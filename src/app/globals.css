@@ -74,11 +74,14 @@
   font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
 }
 
-/* Readable text sitting on photography */
-.overlay-copy {
-  position: relative;
-  z-index: 2;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45), 0 8px 24px rgba(0, 0, 0, 0.35);
+/* Readable text sitting on photography. Lives in the components layer so
+   positioning utilities (absolute/bottom-0) on the element still win. */
+@layer components {
+  .overlay-copy {
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45), 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
 }
 
 .overlay-scrim {
@@ -342,6 +345,19 @@
   gap: 3rem;
   width: max-content;
   animation: marquee 48s linear infinite;
+}
+.animate-caption {
+  animation: caption-in 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+@keyframes caption-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 @keyframes marquee {
   from {

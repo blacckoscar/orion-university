@@ -1,134 +1,92 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { landscapes } from "@/lib/content";
 
-const AUTOPLAY_MS = 4500;
+const AUTOPLAY_MS = 5000;
 
 export function LandscapeCarousel() {
-  const trackRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
   const [hover, setHover] = useState(false);
   const count = landscapes.length;
+  const slide = landscapes[index];
 
-  const scrollToIndex = (i: number) => {
-    const el = trackRef.current;
-    if (!el) return;
-    const card = el.children[i] as HTMLElement | undefined;
-    if (!card) return;
-    el.scrollTo({ left: card.offsetLeft - el.offsetLeft, behavior: "smooth" });
-  };
-
-  const go = (i: number) => {
-    const next = (i + count) % count;
-    setIndex(next);
-    scrollToIndex(next);
-  };
+  const go = (i: number) => setIndex((i + count) % count);
 
   useEffect(() => {
     if (hover) return;
-    const t = window.setInterval(() => {
-      setIndex((cur) => {
-        const next = (cur + 1) % count;
-        scrollToIndex(next);
-        return next;
-      });
-    }, AUTOPLAY_MS);
+    const t = window.setInterval(() => setIndex((cur) => (cur + 1) % count), AUTOPLAY_MS);
     return () => window.clearInterval(t);
   }, [hover, count]);
 
-  useEffect(() => {
-    const el = trackRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        const best = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (!best) return;
-        const i = Array.from(el.children).indexOf(best.target as Element);
-        if (i >= 0) setIndex(i);
-      },
-      { root: el, threshold: [0.6] },
-    );
-    Array.from(el.children).forEach((c) => io.observe(c));
-    return () => io.disconnect();
-  }, []);
-
   return (
     <section
-      className="bg-orion-fog py-16 md:py-24"
+      className="relative bg-orion-fog"
       aria-roledescription="carousel"
       aria-label="Campus views"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <div className="container-orion mb-8 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Campus</p>
-          <h2 className="mt-3 font-serif text-4xl tracking-tight text-orion-ink sm:text-5xl">
-            Views from the Hill
-          </h2>
+      <div className="relative aspect-[16/9] w-full overflow-hidden md:aspect-[21/8]">
+        {/* Sliding track */}
+        <div
+          className="flex h-full w-full transition-transform duration-[900ms] ease-[cubic-bezier(.22,.61,.36,1)]"
+          style={{ transform: `translateX(-${index * 100}%)` }}
+        >
+          {landscapes.map((l, i) => (
+            <div key={l.image} className="relative h-full w-full shrink-0" aria-hidden={i !== index}>
+              <Image
+                src={l.image}
+                alt={l.alt}
+                fill
+                sizes="100vw"
+                priority={i === 0}
+                className="object-cover"
+              />
+            </div>
+          ))}
         </div>
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={() => go(index - 1)}
-            className="grid h-11 w-11 place-items-center rounded-full border border-orion-navy/30 text-orion-navy transition hover:bg-orion-navy hover:text-white"
-            aria-label="Previous"
-          >
-            ‹
-          </button>
-          <button
-            type="button"
-            onClick={() => go(index + 1)}
-            className="grid h-11 w-11 place-items-center rounded-full border border-orion-navy/30 text-orion-navy transition hover:bg-orion-navy hover:text-white"
-            aria-label="Next"
-          >
-            ›
-          </button>
+
+        <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-black/70 via-black/30 to-transparent px-[var(--gutter)] pb-5 pt-16 text-white sm:pb-7">
+          <div className="min-w-0">
+            <p key={slide.caption} className="overlay-copy animate-caption text-sm sm:text-lg">
+              {slide.caption}
+            </p>
+            <div className="mt-3 flex gap-1.5">
+              {landscapes.map((l, i) => (
+                <button
+                  key={l.image}
+                  type="button"
+                  onClick={() => go(i)}
+                  aria-label={`Go to view ${i + 1}`}
+                  aria-current={index === i}
+                  className={`h-1 rounded-full transition-all ${
+                    index === i ? "w-8 bg-white" : "w-3 bg-white/45 hover:bg-white/70"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="flex shrink-0 gap-2">
+            <button
+              type="button"
+              onClick={() => go(index - 1)}
+              className="grid h-10 w-10 place-items-center rounded-full bg-black/55 backdrop-blur transition hover:bg-white hover:text-orion-navy"
+              aria-label="Previous image"
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              onClick={() => go(index + 1)}
+              className="grid h-10 w-10 place-items-center rounded-full bg-black/55 backdrop-blur transition hover:bg-white hover:text-orion-navy"
+              aria-label="Next image"
+            >
+              ›
+            </button>
+          </div>
         </div>
-      </div>
-
-      <div
-        ref={trackRef}
-        className="scroller gap-5 px-[var(--gutter)]"
-      >
-        {landscapes.map((l, i) => (
-          <figure
-            key={l.image}
-            className="relative m-0 aspect-[16/10] w-[min(88vw,760px)] shrink-0 overflow-hidden rounded-2xl bg-black text-white lg:w-[62vw] xl:w-[54vw]"
-            aria-hidden={i !== index}
-          >
-            <Image
-              src={l.image}
-              alt={l.alt}
-              fill
-              sizes="(max-width: 1024px) 88vw, 60vw"
-              className="object-cover"
-            />
-            <div className="overlay-scrim absolute inset-0" />
-            <figcaption className="overlay-copy absolute inset-x-0 bottom-0 p-6 sm:p-8">
-              <p className="font-serif text-2xl leading-tight sm:text-3xl">{l.caption}</p>
-            </figcaption>
-          </figure>
-        ))}
-      </div>
-
-      <div className="container-orion mt-6 flex gap-2">
-        {landscapes.map((l, i) => (
-          <button
-            key={l.image}
-            type="button"
-            onClick={() => go(i)}
-            aria-label={`Go to view ${i + 1}`}
-            aria-current={index === i}
-            className={`h-1.5 rounded-full transition-all ${
-              index === i ? "w-10 bg-orion-navy" : "w-4 bg-orion-navy/25"
-            }`}
-          />
-        ))}
       </div>
     </section>
   );

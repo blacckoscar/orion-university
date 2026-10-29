@@ -30,8 +30,11 @@ export const audienceLinks: NavLink[] = [
 
 export const utilityLinks: NavLink[] = [
   { label: "Orion Home", href: "/" },
-  { label: "Maps & Directions", href: "/life/visit" },
-  { label: "Search Orion", href: "/search" },
+  {
+    label: "Maps & Directions",
+    href: "https://www.google.com/maps/search/?api=1&query=Orion+University+Lom%C3%A9+Togo",
+  },
+  { label: "Emergency Info", href: "/emergency" },
 ];
 
 export const megaNav: MegaSection[] = [

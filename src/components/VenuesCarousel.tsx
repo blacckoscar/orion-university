@@ -20,7 +20,7 @@ export function VenuesCarousel() {
     <div className="relative">
       <div
         ref={ref}
-        className="scroller gap-5 px-4 sm:px-6 lg:px-[max(1.5rem,calc((100vw-1240px)/2))]"
+        className="scroller gap-5 px-[var(--gutter)] scroll-pl-[var(--gutter)]"
       >
         {research.venues.map((v) => (
           <Link
