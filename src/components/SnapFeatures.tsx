@@ -74,7 +74,7 @@ export function SnapFeatures() {
             priority={false}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/55 to-black/25" />
-          <div className="container-orion relative z-10 px-4 py-20 sm:px-6 sm:py-24">
+          <div className="container-orion relative z-10 py-20 sm:py-24">
             <div className="max-w-xl overlay-copy">
               <p className="eyebrow">{f.eyebrow}</p>
               <h2 className="mt-3 font-serif text-4xl tracking-tight sm:text-5xl lg:text-6xl">

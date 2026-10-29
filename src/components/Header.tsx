@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { audienceLinks, megaNav, site, utilityLinks } from "@/lib/content";
+import { audienceLinks, megaNav, site } from "@/lib/content";
 
 export function Header() {
   const [open, setOpen] = useState<string | null>(null);
@@ -38,51 +38,86 @@ export function Header() {
     };
   }, [mobile]);
 
+  const impact = megaNav.find((s) => s.id === "impact")!;
+  const primary = megaNav.filter((s) => s.id !== "impact");
+
   return (
     <header className="sticky top-0 z-50 text-white" onMouseLeave={scheduleClose}>
-      {/* Utility bar */}
-      <div className="bg-orion-navy-deep/95 text-white/85">
-        <div className="container-orion flex items-center justify-between gap-3 px-4 py-1.5 text-[12px] tracking-wide sm:px-6">
-          <nav className="flex flex-wrap items-center gap-x-5 gap-y-1">
-            {utilityLinks.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="hover:text-white hover:underline underline-offset-2"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-          <nav className="hidden items-center gap-x-5 md:flex">
-            <span className="text-white/50">Information for</span>
-            {audienceLinks.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="hover:text-white hover:underline underline-offset-2"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+      {/* Top tier: Our Impact chips + search */}
+      <div className="bg-orion-navy-deep/95">
+        <div className="container-orion flex items-center justify-between gap-4 py-2">
+          <div className="flex min-w-0 items-center gap-2">
+            <button
+              type="button"
+              onMouseEnter={() => {
+                cancelClose();
+                setOpen(impact.id);
+              }}
+              onClick={() => {
+                cancelClose();
+                setOpen(impact.id);
+              }}
+              aria-expanded={open === impact.id}
+              aria-controls={`mega-${impact.id}`}
+              className="shrink-0 text-[11px] font-bold uppercase tracking-[0.14em] text-white/80 hover:text-white"
+            >
+              {impact.label}
+            </button>
+            <div className="hidden min-w-0 items-center gap-1.5 overflow-x-auto md:flex">
+              {impact.links.map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className="shrink-0 whitespace-nowrap rounded-md bg-white/10 px-2.5 py-1 text-[12px] text-white/90 transition hover:bg-white/20 hover:text-white"
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <form
+            action="/search"
+            method="get"
+            className="hidden items-center md:flex"
+            role="search"
+          >
+            <label htmlFor="site-search" className="sr-only">
+              Search Orion
+            </label>
+            <div className="flex items-center gap-2 rounded-md bg-white/10 px-3 py-1.5 transition focus-within:bg-white/15">
+              <SearchIcon />
+              <input
+                id="site-search"
+                name="q"
+                type="search"
+                placeholder="How can we help?"
+                className="w-40 bg-transparent text-[13px] text-white placeholder:text-white/60 outline-none lg:w-52"
+              />
+            </div>
+          </form>
+
+          <Link
+            href="/search"
+            className="grid h-8 w-8 place-items-center rounded-md bg-white/10 md:hidden"
+            aria-label="Search"
+          >
+            <SearchIcon />
+          </Link>
         </div>
       </div>
 
-      {/* Main bar */}
+      {/* Main tier: wordmark + primary links */}
       <div className="glass-bar">
-        <div className="container-orion flex items-center gap-3 px-4 py-3 sm:gap-4 sm:px-6">
+        <div className="container-orion flex items-center justify-between gap-6 py-3.5">
           <Link href="/" className="shrink-0">
-            <span className="font-serif text-[1.35rem] leading-none tracking-tight sm:text-[1.55rem] lg:text-[1.65rem]">
+            <span className="font-serif text-[1.45rem] leading-none tracking-tight sm:text-[1.6rem] xl:text-[1.75rem]">
               {site.name}
             </span>
           </Link>
 
-          <nav
-            className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 overflow-x-auto lg:flex xl:gap-1"
-            aria-label="Primary"
-          >
-            {megaNav.map((section) => (
+          <nav className="hidden items-center gap-1 lg:flex xl:gap-2" aria-label="Primary">
+            {primary.map((section) => (
               <button
                 key={section.id}
                 type="button"
@@ -96,15 +131,15 @@ export function Header() {
                 }}
                 aria-expanded={open === section.id}
                 aria-controls={`mega-${section.id}`}
-                className={`relative shrink-0 whitespace-nowrap rounded px-2 py-2 text-[0.82rem] font-medium transition xl:px-2.5 xl:text-[0.9rem] ${
+                className={`relative whitespace-nowrap rounded px-2.5 py-2 text-[0.9rem] transition xl:px-3 xl:text-[0.95rem] ${
                   open === section.id
-                    ? "bg-white/10 text-white"
+                    ? "text-white"
                     : "text-white/85 hover:text-white"
                 }`}
               >
                 {section.label}
                 <span
-                  className={`absolute inset-x-2 -bottom-[13px] h-[3px] rounded-full bg-orion-orange transition ${
+                  className={`absolute inset-x-2.5 -bottom-[11px] h-[3px] rounded-full bg-orion-orange transition ${
                     open === section.id ? "opacity-100" : "opacity-0"
                   }`}
                 />
@@ -112,49 +147,16 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="ml-auto flex shrink-0 items-center gap-2">
-            <form
-              action="/search"
-              method="get"
-              className="hidden items-center md:flex"
-              role="search"
-            >
-              <label htmlFor="site-search" className="sr-only">
-                Search Orion
-              </label>
-              <input
-                id="site-search"
-                name="q"
-                type="search"
-                placeholder="Search"
-                className="w-28 rounded-l border border-white/20 bg-white/10 px-2.5 py-1.5 text-sm text-white placeholder:text-white/60 outline-none focus:border-white/50 lg:w-36 xl:w-48"
-              />
-              <button
-                type="submit"
-                className="grid h-[34px] w-9 place-items-center rounded-r border border-l-0 border-white/20 bg-white/10 hover:bg-white/15"
-                aria-label="Submit search"
-              >
-                <SearchIcon />
-              </button>
-            </form>
-            <Link
-              href="/search"
-              className="grid h-9 w-9 place-items-center rounded border border-white/20 bg-white/10 md:hidden"
-              aria-label="Search"
-            >
-              <SearchIcon />
-            </Link>
-            <button
-              type="button"
-              onClick={() => setMobile(true)}
-              className="grid h-9 w-9 place-items-center rounded border border-white/20 bg-white/10 lg:hidden"
-              aria-label="Open menu"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M4 7h16M4 12h16M4 17h16" />
-              </svg>
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => setMobile(true)}
+            className="grid h-9 w-9 place-items-center rounded border border-white/20 bg-white/10 lg:hidden"
+            aria-label="Open menu"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+          </button>
         </div>
 
         {/* Mega panel */}
@@ -172,7 +174,7 @@ export function Header() {
             {active ? (
               <div
                 id={`mega-${active.id}`}
-                className="container-orion grid gap-10 px-6 py-10 lg:grid-cols-[1.1fr_1fr_1fr]"
+                className="container-orion grid gap-10 py-10 lg:grid-cols-[1.1fr_1fr_1fr]"
               >
                 <div>
                   <p className="eyebrow">{active.label}</p>

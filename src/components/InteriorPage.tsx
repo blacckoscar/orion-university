@@ -14,7 +14,7 @@ export function InteriorPage({ title, eyebrow, children }: InteriorPageProps) {
       <Header />
       <main className="flex-1">
         <section className="bg-orion-navy text-white">
-          <div className="container-orion px-4 py-14 sm:px-6 sm:py-20">
+          <div className="container-orion py-14 sm:py-20">
             {eyebrow ? (
               <p className="text-xs font-semibold uppercase tracking-[0.12em] text-orion-orange">
                 {eyebrow}

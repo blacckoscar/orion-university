@@ -9,7 +9,7 @@ export function CampusParallax() {
       poster={campusParallax.poster}
       className="h-[80svh] min-h-[520px]"
     >
-      <div className="container-orion flex h-full flex-col items-center justify-center px-4 text-center text-white sm:px-6">
+      <div className="container-orion flex h-full flex-col items-center justify-center text-center text-white">
         <div className="overlay-copy max-w-3xl">
           <p className="eyebrow">Campus Life</p>
           <h2 className="mt-3 font-serif text-4xl tracking-tight sm:text-5xl lg:text-7xl">

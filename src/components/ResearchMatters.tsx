@@ -18,7 +18,7 @@ export function ResearchMatters() {
       </video>
       <div className="absolute inset-0 bg-gradient-to-r from-black/92 via-black/60 to-black/30" />
 
-      <div className="container-orion relative z-10 grid min-h-[70svh] items-center px-4 py-24 sm:px-6">
+      <div className="container-orion relative z-10 grid min-h-[70svh] items-center py-24">
         <div className="overlay-copy max-w-2xl">
           <p className="eyebrow">{researchMatters.eyebrow}</p>
           <h2 className="mt-3 font-serif text-4xl leading-tight tracking-tight sm:text-5xl">

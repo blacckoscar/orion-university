@@ -51,7 +51,7 @@ export function EducationSection() {
 
       {/* Financial aid */}
       <div className="bg-orion-navy-deep">
-        <div className="container-orion grid gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[1fr_1fr] lg:py-28">
+        <div className="container-orion grid gap-12 py-20 lg:grid-cols-[1fr_1fr] lg:py-28">
           <div className="lg:sticky lg:top-40 lg:self-start">
             <Reveal>
               <p className="eyebrow">Admissions &amp; Aid</p>

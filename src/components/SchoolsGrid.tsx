@@ -46,8 +46,10 @@ export function SchoolsGrid() {
                 <div className="overlay-scrim absolute inset-0" />
                 <div className="overlay-copy absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
                   <h3 className="font-serif text-2xl leading-tight">{s.name}</h3>
-                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/70 bg-black/25 text-lg transition group-hover:bg-white group-hover:text-orion-navy">
-                    →
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border-2 border-white text-white transition group-hover:bg-white group-hover:text-orion-navy">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden>
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
                   </span>
                 </div>
               </Link>

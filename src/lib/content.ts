@@ -53,7 +53,7 @@ export const megaNav: MegaSection[] = [
   },
   {
     id: "about",
-    label: "About Orion",
+    label: "About",
     href: "/about",
     blurb:
       "A young university with an ambitious mission: world-class education built in Africa, for the future.",
@@ -152,7 +152,7 @@ export const megaNav: MegaSection[] = [
   },
   {
     id: "life",
-    label: "Campus Life",
+    label: "Life on the Hill",
     href: "/life",
     blurb:
       "Residences, arts, clubs, and community — life at Orion extends far beyond the lecture hall.",
@@ -683,6 +683,18 @@ export const landscapes = [
     image:
       "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=2000&q=80",
     caption: "Between classes on the central walkway",
+  },
+  {
+    alt: "Reading room in the university library",
+    image:
+      "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=2000&q=80",
+    caption: "The reading room at Orion Libraries",
+  },
+  {
+    alt: "Graduates celebrating at commencement",
+    image:
+      "https://images.unsplash.com/photo-1541178735493-479c1a27ed24?auto=format&fit=crop&w=2000&q=80",
+    caption: "Commencement on the main lawn",
   },
 ];
 

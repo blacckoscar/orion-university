@@ -22,7 +22,7 @@ export function ResearchSection() {
       </div>
 
       {/* Sticky feature + scrolling stories */}
-      <div className="container-orion grid gap-12 px-4 py-16 sm:px-6 lg:grid-cols-12 lg:gap-10 lg:py-24">
+      <div className="container-orion grid gap-12 py-16 lg:grid-cols-12 lg:gap-10 lg:py-24">
         <div className="lg:col-span-5 lg:sticky lg:top-40 lg:self-start">
           <Reveal>
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
@@ -110,7 +110,7 @@ export function ResearchSection() {
 
       {/* Venues carousel */}
       <div className="bg-orion-fog py-16 lg:py-24">
-        <div className="container-orion px-4 sm:px-6">
+        <div className="container-orion">
           <Reveal>
             <div className="max-w-3xl">
               <h3 className="font-serif text-3xl tracking-tight text-orion-ink sm:text-4xl">

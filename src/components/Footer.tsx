@@ -47,7 +47,7 @@ export function Footer() {
       </div>
 
       <div className="bg-orion-navy-deep">
-        <div className="container-orion flex flex-col gap-3 px-4 py-5 text-xs text-white/75 sm:px-6 md:flex-row md:flex-wrap md:items-center md:justify-between">
+        <div className="container-orion flex flex-col gap-3 py-5 text-xs text-white/75 md:flex-row md:flex-wrap md:items-center md:justify-between">
           <nav className="flex flex-wrap gap-x-4 gap-y-2" aria-label="Legal">
             {legalLinks.map((link) => (
               <Link

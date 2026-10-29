@@ -13,7 +13,7 @@ export function AthleticsSection() {
         alt="Orion student-athlete competing"
         className="h-[70svh] min-h-[480px]"
       >
-        <div className="container-orion flex h-full flex-col justify-end px-4 pb-14 text-white sm:px-6">
+        <div className="container-orion flex h-full flex-col justify-end pb-14 text-white">
           <div className="overlay-copy max-w-3xl">
             <h2 className="font-serif text-4xl tracking-tight sm:text-5xl lg:text-6xl">
               {athletics.title}

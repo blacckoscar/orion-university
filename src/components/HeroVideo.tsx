@@ -67,7 +67,7 @@ export function HeroVideo() {
       <div className="hero-scrim absolute inset-0" />
 
       <div className="relative z-10 flex h-full flex-col justify-end">
-        <div className="container-orion px-4 pb-10 sm:px-6 sm:pb-14 md:pb-16">
+        <div className="container-orion pb-10 sm:pb-14 md:pb-16">
           <div className="max-w-3xl overlay-copy" key={slide.id}>
             <p className="eyebrow text-white/90">{slide.eyebrow}</p>
             <h1 className="mt-3 font-serif text-3xl leading-tight tracking-tight sm:text-4xl md:text-5xl lg:text-[3.4rem]">

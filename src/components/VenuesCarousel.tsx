@@ -47,7 +47,7 @@ export function VenuesCarousel() {
         ))}
       </div>
 
-      <div className="container-orion mt-6 flex justify-end gap-2 px-4 sm:px-6">
+      <div className="container-orion mt-6 flex justify-end gap-2">
         <button
           type="button"
           onClick={() => scrollBy(-1)}
