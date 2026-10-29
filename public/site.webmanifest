@@ -1,0 +1,22 @@
+{
+  "name": "Orion University",
+  "short_name": "Orion",
+  "description": "Orion University, Lomé, Togo — transforming African education to match the future.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a1f3a",
+  "theme_color": "#0a1f3a",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

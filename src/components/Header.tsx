@@ -42,18 +42,23 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 text-white" onMouseLeave={scheduleClose}>
-      {/* Top tier (laptop+): utility links + search */}
-      <div className="hidden bg-orion-navy-deep/95 lg:block">
-        <div className="container-orion flex items-center justify-between gap-4 py-2">
-          <ul className="flex items-center gap-6 text-[13px] text-white/80">
+      {/* Top tier: utility links on all screens; search field on laptop+ */}
+      <div className="bg-orion-navy-deep/95">
+        <div className="container-orion flex items-center justify-between gap-3 py-2">
+          <ul className="flex min-w-0 items-center gap-3 overflow-x-auto text-[12px] text-white/80 sm:gap-5 sm:text-[13px] lg:gap-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {utilityLinks.map((l) => (
-              <li key={l.href}>
+              <li key={l.href} className="shrink-0">
                 <UtilityLink link={l} className="transition hover:text-white hover:underline" />
               </li>
             ))}
           </ul>
 
-          <form action="/search" method="get" className="flex items-center" role="search">
+          <form
+            action="/search"
+            method="get"
+            className="hidden shrink-0 items-center lg:flex"
+            role="search"
+          >
             <label htmlFor="site-search" className="sr-only">
               Search Orion
             </label>
