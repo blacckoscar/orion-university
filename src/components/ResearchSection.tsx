@@ -28,10 +28,12 @@ export function ResearchSection() {
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
               <Image
                 src={research.featureImage}
-                alt=""
+                alt="Human-centered artificial intelligence research at Orion"
                 fill
-                sizes="(max-width: 1024px) 100vw, 40vw"
-                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 520px"
+                quality={90}
+                priority={false}
+                className="object-cover object-center"
               />
             </div>
             <h3 className="mt-6 font-serif text-3xl leading-tight text-orion-ink">

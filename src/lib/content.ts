@@ -296,8 +296,7 @@ export const research = {
     "Orion’s Centre for Intelligent Systems was founded to pursue artificial intelligence that serves people first — building tools for farmers, clinicians, and teachers across the region.",
   featureQuote:
     "We believe AI should answer to the communities it serves. Orion researchers build systems with farmers, nurses, and teachers as co-designers, publish their work openly, and advise regional governments on the rules that keep these tools safe and fair.",
-  featureImage:
-    "https://images.unsplash.com/photo-1770233621425-5d9ee7a0a700?auto=format&fit=crop&w=1932&q=80",
+  featureImage: "/media/ai-feature.jpg",
   portraitVideo: "/media/portrait.mp4",
   portraitPoster:
     "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80",
