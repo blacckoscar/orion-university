@@ -4,29 +4,31 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { landscapes } from "@/lib/content";
 
-const AUTOPLAY_MS = 5000;
+const AUTOPLAY_MS = 2000;
 
 export function LandscapeCarousel() {
   const [index, setIndex] = useState(0);
-  const [hover, setHover] = useState(false);
   const count = landscapes.length;
   const slide = landscapes[index];
 
-  const go = (i: number) => setIndex((i + count) % count);
+  // Manual navigation restarts the timer so the next auto-advance
+  // doesn't fire a split second after a click.
+  const [tick, setTick] = useState(0);
+  const go = (i: number) => {
+    setIndex((i + count) % count);
+    setTick((t) => t + 1);
+  };
 
   useEffect(() => {
-    if (hover) return;
     const t = window.setInterval(() => setIndex((cur) => (cur + 1) % count), AUTOPLAY_MS);
     return () => window.clearInterval(t);
-  }, [hover, count]);
+  }, [count, tick]);
 
   return (
     <section
       className="relative bg-orion-fog"
       aria-roledescription="carousel"
       aria-label="Campus views"
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
     >
       <div className="relative aspect-[16/9] w-full overflow-hidden md:aspect-[21/8]">
         {/* Sliding track */}
