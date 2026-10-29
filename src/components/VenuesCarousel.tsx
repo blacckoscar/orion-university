@@ -20,28 +20,28 @@ export function VenuesCarousel() {
     <div className="relative">
       <div
         ref={ref}
-        className="scroller px-4 sm:px-[max(1.5rem,calc((100vw-1240px)/2+1.5rem))]"
+        className="scroller gap-5 px-4 sm:px-6 lg:px-[max(1.5rem,calc((100vw-1240px)/2))]"
       >
         {research.venues.map((v) => (
           <Link
             key={v.href}
             href={v.href}
             data-card
-            className="group relative block w-[78vw] max-w-[420px] overflow-hidden rounded-2xl bg-black text-white sm:w-[380px]"
+            className="group relative block w-[min(86vw,380px)] shrink-0 overflow-hidden rounded-2xl bg-black text-white sm:w-[360px]"
           >
             <div className="relative aspect-[4/5]">
               <Image
                 src={v.image}
                 alt=""
                 fill
-                sizes="420px"
-                className="object-cover opacity-90 transition duration-700 group-hover:scale-[1.05] group-hover:opacity-100"
+                sizes="380px"
+                className="object-cover transition duration-700 group-hover:scale-[1.05]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
-            </div>
-            <div className="absolute inset-x-0 bottom-0 p-6">
-              <h4 className="font-serif text-2xl leading-tight">{v.title}</h4>
-              <p className="mt-2 text-sm leading-6 text-white/80">{v.body}</p>
+              <div className="overlay-scrim absolute inset-0" />
+              <div className="overlay-copy absolute inset-x-0 bottom-0 p-6">
+                <h4 className="font-serif text-2xl leading-tight">{v.title}</h4>
+                <p className="mt-2 text-sm leading-6 text-white/90">{v.body}</p>
+              </div>
             </div>
           </Link>
         ))}

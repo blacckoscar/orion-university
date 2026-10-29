@@ -14,15 +14,17 @@ export function AthleticsSection() {
         className="h-[70svh] min-h-[480px]"
       >
         <div className="container-orion flex h-full flex-col justify-end px-4 pb-14 text-white sm:px-6">
-          <Reveal>
+          <div className="overlay-copy max-w-3xl">
             <h2 className="font-serif text-4xl tracking-tight sm:text-5xl lg:text-6xl">
               {athletics.title}
             </h2>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-white/90">{athletics.body}</p>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-white/95">
+              {athletics.body}
+            </p>
             <Link href={athletics.cta.href} className="btn-orion-light mt-8">
               {athletics.cta.label}
             </Link>
-          </Reveal>
+          </div>
         </div>
       </ParallaxImage>
 
@@ -33,15 +35,18 @@ export function AthleticsSection() {
               <h3 className="font-serif text-3xl tracking-tight text-orion-ink sm:text-4xl">
                 {athletics.subTitle}
               </h3>
-              <p className="mt-5 text-lg leading-8 text-orion-muted">{athletics.subBody}</p>
+              <p className="mt-5 text-lg leading-8 text-orion-muted">
+                {athletics.subBody}
+              </p>
             </Reveal>
             <div className="grid grid-cols-3 gap-3">
-              {athletics.gallery.map((img, i) => (
-                <Reveal key={img} delay={i * 80}>
-                  <div className="relative aspect-[3/4] overflow-hidden rounded-xl">
-                    <Image src={img} alt="" fill sizes="30vw" className="object-cover" />
-                  </div>
-                </Reveal>
+              {athletics.gallery.map((img) => (
+                <div
+                  key={img}
+                  className="relative aspect-[3/4] overflow-hidden rounded-xl"
+                >
+                  <Image src={img} alt="" fill sizes="30vw" className="object-cover" />
+                </div>
               ))}
             </div>
           </div>

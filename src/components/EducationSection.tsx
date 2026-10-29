@@ -20,23 +20,24 @@ export function EducationSection() {
             </Reveal>
           </div>
 
-          <Reveal>
-            <div className="relative mt-12 aspect-[16/9] overflow-hidden rounded-2xl md:aspect-[21/9]">
-              <Image
-                src={education.civicImage}
-                alt="Students in discussion at Orion"
-                fill
-                sizes="100vw"
-                className="object-cover"
-              />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-6 sm:p-10">
-                <h3 className="font-serif text-3xl tracking-tight sm:text-4xl">
-                  {education.civicTitle}
-                </h3>
-                <p className="mt-3 max-w-2xl leading-7 text-white/90">{education.civicBody}</p>
-              </div>
+          <div className="relative mt-12 aspect-[16/9] overflow-hidden rounded-2xl md:aspect-[21/9]">
+            <Image
+              src={education.civicImage}
+              alt="Students in discussion at Orion"
+              fill
+              sizes="100vw"
+              className="object-cover"
+            />
+            <div className="overlay-scrim absolute inset-0" />
+            <div className="overlay-copy absolute inset-x-0 bottom-0 p-6 sm:p-10">
+              <h3 className="font-serif text-3xl tracking-tight sm:text-4xl">
+                {education.civicTitle}
+              </h3>
+              <p className="mt-3 max-w-2xl leading-7 text-white/95">
+                {education.civicBody}
+              </p>
             </div>
-          </Reveal>
+          </div>
 
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {education.civicStories.map((s, i) => (

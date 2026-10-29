@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { heroSlides } from "@/lib/content";
@@ -42,32 +41,26 @@ export function HeroVideo() {
       aria-label="Featured stories"
     >
       {heroSlides.map((s, i) => (
-        <div key={s.id} className="hero-slide" data-active={i === index} aria-hidden={i !== index}>
-          {s.kind === "video" ? (
-            <video
-              ref={(el) => {
-                videoRefs.current[i] = el;
-              }}
-              className="h-full w-full object-cover"
-              muted
-              loop
-              playsInline
-              preload={i === 0 ? "auto" : "metadata"}
-              poster={s.poster}
-              aria-hidden
-            >
-              <source src={s.src} type="video/mp4" />
-            </video>
-          ) : (
-            <Image
-              src={s.src}
-              alt=""
-              fill
-              priority={i === 0}
-              sizes="100vw"
-              className="object-cover"
-            />
-          )}
+        <div
+          key={s.id}
+          className="hero-slide"
+          data-active={i === index}
+          aria-hidden={i !== index}
+        >
+          <video
+            ref={(el) => {
+              videoRefs.current[i] = el;
+            }}
+            className="h-full w-full object-cover"
+            muted
+            loop
+            playsInline
+            preload={i === 0 ? "auto" : "metadata"}
+            poster={s.poster}
+            aria-hidden
+          >
+            <source src={s.src} type="video/mp4" />
+          </video>
         </div>
       ))}
 
@@ -75,17 +68,32 @@ export function HeroVideo() {
 
       <div className="relative z-10 flex h-full flex-col justify-end">
         <div className="container-orion px-4 pb-10 sm:px-6 sm:pb-14 md:pb-16">
-          <div className="max-w-3xl" key={slide.id}>
+          <div className="max-w-3xl overlay-copy" key={slide.id}>
             <p className="eyebrow text-white/90">{slide.eyebrow}</p>
             <h1 className="mt-3 font-serif text-3xl leading-tight tracking-tight sm:text-4xl md:text-5xl lg:text-[3.4rem]">
-              <Link href={slide.href} className="hover:underline underline-offset-4">
+              <Link
+                href={slide.href}
+                className="hover:underline underline-offset-4"
+              >
                 {slide.headline}
               </Link>
             </h1>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link href="/admissions-aid" className="btn-orion-light">
+                Apply now
+              </Link>
+              <Link href={slide.href} className="btn-orion-outline">
+                Read the story
+              </Link>
+            </div>
           </div>
 
           <div className="mt-8 flex items-center justify-between gap-6">
-            <div className="flex items-center gap-2" role="tablist" aria-label="Slides">
+            <div
+              className="flex items-center gap-2"
+              role="tablist"
+              aria-label="Slides"
+            >
               {heroSlides.map((s, i) => (
                 <button
                   key={s.id}

@@ -206,8 +206,10 @@ export const heroSlides: HeroSlide[] = [
   },
   {
     id: "students",
-    kind: "image",
-    src: "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=2000&q=80",
+    kind: "video",
+    src: "/media/students.mp4",
+    poster:
+      "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=2000&q=80",
     eyebrow: "Student Life",
     headline: "A new academic year begins on a lively campus",
     href: "/life",
@@ -292,7 +294,7 @@ export const research = {
   featureQuote:
     "We believe AI should answer to the communities it serves. Orion researchers build systems with farmers, nurses, and teachers as co-designers, publish their work openly, and advise regional governments on the rules that keep these tools safe and fair.",
   featureImage:
-    "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1400&q=80",
+    "https://images.unsplash.com/photo-1770233621425-5d9ee7a0a700?auto=format&fit=crop&w=1932&q=80",
   portraitVideo: "/media/portrait.mp4",
   portraitPoster:
     "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=800&q=80",

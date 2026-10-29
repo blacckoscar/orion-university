@@ -71,20 +71,17 @@ export function Header() {
 
       {/* Main bar */}
       <div className="glass-bar">
-        <div className="container-orion flex items-center justify-between gap-6 px-4 py-3 sm:px-6">
-          <Link href="/" className="flex shrink-0 items-center gap-3">
-            <span
-              aria-hidden
-              className="grid h-10 w-10 place-items-center rounded-sm border border-white/30 bg-white/5 font-serif text-xl font-semibold"
-            >
-              O
-            </span>
-            <span className="font-serif text-[1.3rem] leading-none tracking-tight sm:text-[1.5rem] xl:text-[1.6rem]">
+        <div className="container-orion flex items-center gap-3 px-4 py-3 sm:gap-4 sm:px-6">
+          <Link href="/" className="shrink-0">
+            <span className="font-serif text-[1.35rem] leading-none tracking-tight sm:text-[1.55rem] lg:text-[1.65rem]">
               {site.name}
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
+          <nav
+            className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 overflow-x-auto lg:flex xl:gap-1"
+            aria-label="Primary"
+          >
             {megaNav.map((section) => (
               <button
                 key={section.id}
@@ -99,7 +96,7 @@ export function Header() {
                 }}
                 aria-expanded={open === section.id}
                 aria-controls={`mega-${section.id}`}
-                className={`relative whitespace-nowrap rounded px-2.5 py-2 text-[0.88rem] font-medium transition xl:px-3 xl:text-[0.92rem] ${
+                className={`relative shrink-0 whitespace-nowrap rounded px-2 py-2 text-[0.82rem] font-medium transition xl:px-2.5 xl:text-[0.9rem] ${
                   open === section.id
                     ? "bg-white/10 text-white"
                     : "text-white/85 hover:text-white"
@@ -107,7 +104,7 @@ export function Header() {
               >
                 {section.label}
                 <span
-                  className={`absolute inset-x-3 -bottom-[13px] h-[3px] rounded-full bg-orion-orange transition ${
+                  className={`absolute inset-x-2 -bottom-[13px] h-[3px] rounded-full bg-orion-orange transition ${
                     open === section.id ? "opacity-100" : "opacity-0"
                   }`}
                 />
@@ -115,11 +112,11 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
+          <div className="ml-auto flex shrink-0 items-center gap-2">
             <form
               action="/search"
               method="get"
-              className="hidden items-center xl:flex"
+              className="hidden items-center md:flex"
               role="search"
             >
               <label htmlFor="site-search" className="sr-only">
@@ -130,7 +127,7 @@ export function Header() {
                 name="q"
                 type="search"
                 placeholder="Search"
-                className="w-36 rounded-l border border-white/20 bg-white/10 px-3 py-1.5 text-sm text-white placeholder:text-white/60 outline-none focus:border-white/50 xl:w-52"
+                className="w-28 rounded-l border border-white/20 bg-white/10 px-2.5 py-1.5 text-sm text-white placeholder:text-white/60 outline-none focus:border-white/50 lg:w-36 xl:w-48"
               />
               <button
                 type="submit"
@@ -142,7 +139,7 @@ export function Header() {
             </form>
             <Link
               href="/search"
-              className="grid h-9 w-9 place-items-center rounded border border-white/20 bg-white/10 xl:hidden"
+              className="grid h-9 w-9 place-items-center rounded border border-white/20 bg-white/10 md:hidden"
               aria-label="Search"
             >
               <SearchIcon />
